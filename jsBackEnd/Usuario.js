@@ -1,5 +1,6 @@
 module.exports = class Usuario {
 
+    // nombreUsuario (mail) puede generarse como un Symbol para asegurar que sea un dato único
     constructor(nombre, apellido, dni){
         this._nombre = nombre;
         this._apellido = apellido;
@@ -23,6 +24,12 @@ module.exports = class Usuario {
     set cuit(cuit = ""){
         this._cuit = cuit;
     }
+    set nombreUsuario(nombreUsuario) {
+        this._nombreUsuario = nombreUsuario;
+    }
+    set claveUsuario(claveUsuario) {
+        this._claveUsuario = claveUsuario;
+    }
 
     /* GETTERS --------------------------------------------------------------*/
 
@@ -41,4 +48,25 @@ module.exports = class Usuario {
     get cuit() {
         return this._cuit
     }
+    get nombreUsuario() {
+        return this._nombreUsuario;
+    }
+    get claveUsuario() {
+        return this._claveUsuario;
+    }
+
+    /* FUNCTIONS ------------------------------------------------------------*/
+
+    controlTipoDeUsuario = () => {
+
+        if(this instanceof('Comerciante')) {
+
+            console.log('\nMensaje Consola : EL USUARIO ES DE TIPO Comerciante');
+            return true;
+        }else {
+
+            console.log('\nMensaje Consola : EL USUARIO ES DE TIPO Proovedor');
+            return false;
+        }
+    } 
 }
