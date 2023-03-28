@@ -2,6 +2,8 @@ const Usuario = require('./jsBackEnd/Usuario');
 const Comerciante = require('./jsBackEnd/Comerciante');
 const Producto = require('./jsBackEnd/Producto');
 const Proveedor = require('./jsBackEnd/Proveedor');
+//const BaseDatos = require('./jsBackEnd/bbdd/BaseDeDatos')
+const mysql2 = require('mysql2');
 
 const HTTP = require('http');
 const URL = require('url');
@@ -114,23 +116,34 @@ HTTP.createServer(
                 datosDelPost = Buffer.concat(datosDelPost).toString();
 
                 let arrayPost = datosDelPost.split('&');
-                let nombre = arrayPost[0].split('=');
-                let apellido = arrayPost[1].split('=');
-                let dni = arrayPost[2].split('=');
-                let email = arrayPost[3].split('=');
-                let clave = arrayPost[4].split('=');
-                let claveConfirmacion = arrayPost[5].split('=');
+
+                let tipoUsuario = arrayPost[0].split('=');
+                let nombre = arrayPost[1].split('=');
+                let apellido = arrayPost[2].split('=');
+                let dni = arrayPost[3].split('=');
+                let cuit = arrayPost[4].split('=');
+                let nombreNegocio = arrayPost[5].split('=');
+                let calleNegocio = arrayPost[6].split('=');
+                let alturaNegocio = arrayPost[7].split('=');
+                let email = arrayPost[8].split('=');
+                let clave = arrayPost[9].split('=');
+                let claveConfirmacion = arrayPost[10].split('=');
 
                 let datosRegistro =  {
+                    'tipoUsuario' : tipoUsuario[1],
                     'nombre': nombre[1],
                     'apellido': apellido[1],
                     'dni': dni[1],
+                    'cuit' : cuit[1],
+                    'nombreNegocio' : nombreNegocio[1],
+                    'calleNegocio' : calleNegocio[1],
+                    'alturaNegocio' : alturaNegocio[1],
                     'email': email[1],
                     'clave': clave[1],
                     'claveConfirmacion': claveConfirmacion[1]
                 }; 
 
-                console.log(
+                console.log('\nMensaje Consola (main) (recepción de registro) : ' +
                     '\nDATOS REGISTRO : -------------------------------------------------' +
                     '\n NOMBRE : ' + datosRegistro.nombre + 
                     '\n APELLIDO : ' + datosRegistro. apellido +
@@ -138,11 +151,22 @@ HTTP.createServer(
                     '\n CLAVE : ' + datosRegistro.clave +
                     '\n CONFIRMACION CLAVE : ' + datosRegistro.claveConfirmacion
                 );
+
+                let con = mysql2.createConnection({host : 'localhost', user : 'root', password : '7485'});
+
+                con.connect((err) => {
+                    if(err) throw err;
+                    let consulta = `CALL proyecto_productos.registro_usuario(${datosRegistro.tipoUsuario}, ${datosRegistro.nombre}, ${datosRegistro.apellido},${datosRegistro.dni}, ${datosRegistro.cuit}, ${datosRegistro.nombreNegocio}, ${datosRegistro.calleNegocio}, ${datosRegistro.alturaNegocio}, ${datosRegistro.email}, ${datosRegistro.clave});`
+
+                    con.query(consulta, (err) => {
+                        if(err) throw err;
+                        console.log('\nMensaje Consola (main) (registro usuario) : se registro el usuario');
+                    })
+                })
             });
 
         }
 
-        // datosDelPost.splice(0);
         console.log('fIN sOLICITUD ------------------------------------------------------------------------');
     }
     
