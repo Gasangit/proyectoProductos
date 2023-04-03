@@ -103,7 +103,7 @@ DROP PROCEDURE IF EXISTS registro_usuario;
 
 DELIMITER $$
 
-CREATE PROCEDURE registro_usuario(p_tipo_usuario VARCHAR(50), p_nombre VARCHAR(255), 
+CREATE PROCEDURE registro_usuario(IN p_tipo_usuario VARCHAR(50), p_nombre VARCHAR(255), 
 									p_apellido VARCHAR(255), p_dni VARCHAR(8), p_cuit VARCHAR(11), 
                                     p_comercio_nombre VARCHAR(255),p_comercio_calle VARCHAR(255), 
                                     p_comercio_altura VARCHAR(6), p_email VARCHAR(255), p_clave VARCHAR(255))
