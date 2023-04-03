@@ -145,3 +145,4 @@ DELIMITER ;
 -- CALL registro_usuario("comerciante", "Anselmo", "Torres", "23789654", "30237896543", "Un Bar", "Belaustegui", "1153", "unbar@gmail.com", "123");  
 
 select * from proyecto_productos.comerciantes;
+DELETE FROM proyecto_productos.comerciantes WHERE apellido = "Mansilla";

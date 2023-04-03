@@ -125,18 +125,22 @@ HTTP.createServer(
                 console.log(' >>>>>>>>>>>>>>>> ' + datosDelPost.length);
                 console.log(arrayPost[0]);
 
-                if(arrayPost[0] != undefined) { let tipoUsuario = arrayPost[0].split('=');
-                if(arrayPost[1] != undefined) { let nombre = arrayPost[1].split('=');
-                if(arrayPost[2] != undefined) { let apellido = arrayPost[2].split('='); 
-                if(arrayPost[3] != undefined) { let dni = arrayPost[3].split('='); 
-                if(arrayPost[4] != undefined) { let cuit = arrayPost[4].split('='); 
-                if(arrayPost[5] != undefined) { let nombreNegocio = arrayPost[5].split('='); 
-                if(arrayPost[6] != undefined) { let calleNegocio = arrayPost[6].split('='); 
-                if(arrayPost[7] != undefined) { let alturaNegocio = arrayPost[7].split('='); 
-                if(arrayPost[8] != undefined) { let email = arrayPost[8].split('='); 
-                if(arrayPost[9] != undefined) { let clave = arrayPost[9].split('='); 
-                if(arrayPost[10] != undefined){ let claveConfirmacion = arrayPost[10].split('='); 
+                /* if(arrayPost[0] != undefined) { */ let tipoUsuario = arrayPost[0].split('=');
+                /* if(arrayPost[1] != undefined) { */ let nombre = arrayPost[1].split('=');
+                /* if(arrayPost[2] != undefined) { */ let apellido = arrayPost[2].split('='); 
+                /* if(arrayPost[3] != undefined) { */ let dni = arrayPost[3].split('='); 
+                /* if(arrayPost[4] != undefined) { */ let cuit = arrayPost[4].split('='); 
+                /* if(arrayPost[5] != undefined) { */ let nombreNegocio = arrayPost[5].split('='); 
+                /* if(arrayPost[6] != undefined) { */ let calleNegocio = arrayPost[6].split('='); 
+                /* if(arrayPost[7] != undefined) { */ let alturaNegocio = arrayPost[7].split('='); 
+                /* if(arrayPost[8] != undefined) { */ let email = arrayPost[8].split('='); 
+                /* if(arrayPost[9] != undefined) { */ let clave = arrayPost[9].split('='); 
+                /* if(arrayPost[10] != undefined){ */ let claveConfirmacion = arrayPost[10].split('='); 
                 
+                nombre = nombre.toString().replace(/\+/gi, ' ');
+                apellido = apellido.toString().replace(/\+/g, ' ');
+                calleNegocio = calleNegocio.toString().replace(/\+/g, ' '); 
+
                 let datosRegistro =  {
                     'tipoUsuario' : "'" + tipoUsuario[1] + "'",
                     'nombre': "'" + nombre[1] + "'",
@@ -169,7 +173,11 @@ HTTP.createServer(
                     console.log(consulta);
 
                     con.query(consulta, (err, resultado, campos) => {
-                        if(err) throw err;
+                        if(err) {
+                            console.log('\n>>> MENSAJE ERROR CONSULTA BBDD : ' + err.message +
+                                        '\n>>> NÚMERO ERROR CONSULTA BBDD : ' + err.errno
+                            );
+                        }
                         console.log('\nMensaje Consola (main) (registro usuario) : se registró el usuario');
                     })
                 })
